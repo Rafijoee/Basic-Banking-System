@@ -2,29 +2,31 @@ class BankAccount {
     constructor (email, password, balance = 0) {
         this.email = email;
         this.password = password;
-        this.balance = balance;
-        this.transactions = [];
-    }// Method login() untuk login ke akun bank
-
+        this.balance = balance; // uang dari pemilik akun, default 0
+        this.transactions = []; // untuk memasukkan data transaksi ke variabel kosong
+    }
+    // Method login() untuk login ke akun bank
     login() {
         let email = prompt("Masukkan email:");
         let password = prompt("Masukkan password:");
         if (email === this.email && password === this.password) {
             alert("Login berhasil!");
-            this.dashboard();
+            this.dashboard(); // ke dashboard
         } else {
             alert("Login gagal! email atau password salah.");
+            // kembali ke method login
         }
     }
 
     async dashboard(){
+        //method async, untuk menggunakan fungsi await
         let action;
         do {
             action = prompt("Apa yang ingin kamu lakukan?\n(1) Tambah Saldo \n(2) Kurangi Saldo \n(3) Lihat Saldo \n(4) Lihat Riwayat Transaksi \n(5) Logout");
             switch (action) {
                 case '1':
                     try {
-                        let message = await this.deposit();
+                        let message = await this.deposit();// bakal dimasukkan dulu uangnya, lalu bakal ada message sukses dan kembali ke dashboard
                         alert(message);
                         this.dashboard(); // Kembali ke dashboard setelah deposit berhasil
                     } catch (error) {
@@ -54,6 +56,7 @@ class BankAccount {
     }
 
     deposit() {
+        //penggunaan promise, untuk penggunaan async serta await
         return new Promise((resolve, reject) => {
             let amount = parseFloat(prompt("Masukkan jumlah yang ingin ditambahkan:"));
             if (!isNaN(amount) && amount > 0) {
@@ -69,6 +72,7 @@ class BankAccount {
     }
 
     withdraw() {
+        //penggunaan promise, untuk penggunaan async serta await
         return new Promise((resolve, reject) => {
             let amount = parseFloat(prompt("Masukkan jumlah yang ingin ditarik:"));
             if (!isNaN(amount) && amount > 0) {
